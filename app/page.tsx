@@ -1,10 +1,10 @@
 import { ScrollDraw } from "@/components/animation/ScrollDraw";
-import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
-import { SelectedWork } from "@/components/sections/SelectedWork";
-import { Experience } from "@/components/sections/Experience";
-import { Skills } from "@/components/sections/Skills";
 import { Contact } from "@/components/sections/Contact";
+import { Experience } from "@/components/sections/Experience";
+import { Hero } from "@/components/sections/Hero";
+import { SelectedWork } from "@/components/sections/SelectedWork";
+import { Skills } from "@/components/sections/Skills";
 import { Footer } from "@/components/ui/Footer";
 
 export default function Home() {

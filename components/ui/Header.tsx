@@ -6,9 +6,13 @@ export function Header() {
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <a className="brand" href="#top" aria-label={`${site.name} — back to top`}>
+        <a
+          className="brand"
+          href="#top"
+          aria-label={`${site.name} — back to top`}
+        >
           <span className="dot" aria-hidden="true" />
-          <span className="name">{"Andre Sha"}</span>
+          <span className="name">{"Andre Sha"}</span>
         </a>
         <nav className="topnav" aria-label="Primary">
           {navItems.map((item) => (

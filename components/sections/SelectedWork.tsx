@@ -1,6 +1,6 @@
-import { projects } from "@/lib/data/projects";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { projects } from "@/lib/data/projects";
 
 export function SelectedWork() {
   return (

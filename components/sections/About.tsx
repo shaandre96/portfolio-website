@@ -1,5 +1,5 @@
-import { site } from "@/lib/site";
 import { NodeMarker } from "@/components/ui/NodeMarker";
+import { site } from "@/lib/site";
 
 export function About() {
   return (

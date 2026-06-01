@@ -1,6 +1,6 @@
-import { experience } from "@/lib/data/experience";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { NodeMarker } from "@/components/ui/NodeMarker";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { experience } from "@/lib/data/experience";
 
 export function Experience() {
   return (

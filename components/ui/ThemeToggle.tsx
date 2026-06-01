@@ -72,7 +72,13 @@ export function ThemeToggle() {
             <circle cx="16.5" cy="9.2" r="7.4" fill="black" />
           </mask>
         </defs>
-        <circle cx="12" cy="12" r="7.6" fill="currentColor" mask="url(#moonMask)" />
+        <circle
+          cx="12"
+          cy="12"
+          r="7.6"
+          fill="currentColor"
+          mask="url(#moonMask)"
+        />
       </svg>
     </button>
   );

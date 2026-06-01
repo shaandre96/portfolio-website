@@ -17,7 +17,7 @@ export const projects: Project[] = [
     name: "CommonGround",
     description: "Full-stack chat & matching app.",
     tags: ["Next.js", "Supabase", "PostgreSQL"],
-    href: "#",
+    href: "https://common-ground-amber-alpha.vercel.app/",
   },
   {
     index: "project.02",
@@ -25,7 +25,7 @@ export const projects: Project[] = [
     name: "DevReview",
     description: "AI code review tool — streaming, GitHub PR integration.",
     tags: ["Next.js", "Claude API", "SSE"],
-    href: "#",
+    href: "https://dev-review-alpha.vercel.app/",
   },
   {
     index: "project.03",
@@ -33,6 +33,6 @@ export const projects: Project[] = [
     name: "Plynth",
     description: "Headless music-gift storefront with AI configurator.",
     tags: ["Next.js", "Redux", "iTunes API", "Claude API"],
-    href: "#",
+    href: "https://plynth-storefront.vercel.app/",
   },
 ];

@@ -10,10 +10,10 @@ export const site = {
     "Lead full stack developer building enterprise web platforms, real-time systems, and AI-powered tools — from architecture to pixel.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://andresha.dev",
   email: "shaandre96@gmail.com",
-  linkedin: "https://linkedin.com/in/andre-sha",
-  github: "https://github.com/andre-sha",
+  linkedin: "https://www.linkedin.com/in/andre-sha/",
+  github: "https://github.com/shaandre96",
   linkedinLabel: "linkedin.com/in/andre-sha",
-  githubLabel: "github.com/andre-sha",
+  githubLabel: "github.com/shaandre96",
   availability: "Open to senior & lead roles · remote and international",
   /** Drop a real PDF at /public/andre-sha-cv.pdf to wire this up. */
   cvPath: "/andre-sha-cv.pdf",

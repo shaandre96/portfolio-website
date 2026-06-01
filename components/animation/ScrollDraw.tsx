@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
 import { animate, stagger } from "animejs";
+import { useEffect } from "react";
 
 /**
  * The continuous left-rail blueprint circuit.
@@ -38,13 +38,21 @@ export function ScrollDraw() {
     const mTop = () => main.getBoundingClientRect().top + window.scrollY;
 
     const draw = () => {
-      const pen = window.scrollY + window.innerHeight * 0.5;
+      // The pen rides mid-viewport near the top, then eases to the very bottom
+      // edge as you reach the end of the page. Without this, the pen tops out
+      // half a viewport short of the document bottom and the final terminus
+      // node — which sits in that last half-viewport — never activates.
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const frac = maxScroll > 0 ? Math.min(1, window.scrollY / maxScroll) : 1;
+      const pen = window.scrollY + window.innerHeight * (0.5 + 0.5 * frac);
       const d = Math.max(0, Math.min(spineH, pen - mTop()));
       progress.style.height = `${d}px`;
-      nodes.forEach((n) => {
-        const y = n.getBoundingClientRect().top + window.scrollY + n.offsetHeight / 2;
+      for (const n of nodes) {
+        const y =
+          n.getBoundingClientRect().top + window.scrollY + n.offsetHeight / 2;
         n.classList.toggle("active", pen >= y);
-      });
+      }
     };
 
     const layout = () => {
@@ -63,7 +71,9 @@ export function ScrollDraw() {
       layout();
       progress.style.transition = "none";
       progress.style.height = `${spineH}px`;
-      nodes.forEach((n) => n.classList.add("active"));
+      for (const n of nodes) {
+        n.classList.add("active");
+      }
       return;
     }
 
@@ -130,7 +140,9 @@ export function ScrollDraw() {
         },
         { threshold: 0.1, rootMargin: "0px 0px -8% 0px" },
       );
-      sections.forEach((section) => io?.observe(section));
+      for (const section of sections) {
+        io?.observe(section);
+      }
 
       // Failsafe: if the observer never fires (throttled/background tab),
       // force everything visible so the page can never render blank.

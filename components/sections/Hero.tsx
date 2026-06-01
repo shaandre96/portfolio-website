@@ -1,7 +1,7 @@
-import { site } from "@/lib/site";
+import { CircuitPath } from "@/components/animation/CircuitPath";
 import { Button } from "@/components/ui/Button";
 import { NodeMarker } from "@/components/ui/NodeMarker";
-import { CircuitPath } from "@/components/animation/CircuitPath";
+import { site } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -33,12 +33,7 @@ export function Hero() {
             <Button variant="primary" href="#work" glyph="→">
               View work
             </Button>
-            <Button
-              variant="ghost"
-              href={site.cvPath}
-              glyph="↓"
-              download
-            >
+            <Button variant="ghost" href={site.cvPath} glyph="↓" download>
               Download CV
             </Button>
           </div>
