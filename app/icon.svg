@@ -1,0 +1,27 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .bg { fill: #FBFAF7; }
+    .frame { stroke: #D8D4C8; }
+    .grid { stroke: #1B3A5C; }
+    .accent { fill: #1B6FB8; }
+    .accent-stroke { stroke: #1B6FB8; }
+    .glow { fill: #1B6FB8; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #0C1620; }
+      .frame { stroke: #1E3247; }
+      .grid { stroke: #5FB3F0; }
+      .accent { fill: #5FB3F0; }
+      .accent-stroke { stroke: #5FB3F0; }
+      .glow { fill: #5FB3F0; }
+    }
+  </style>
+  <!-- blueprint tile -->
+  <rect class="bg" x="0.5" y="0.5" width="31" height="31" rx="6" />
+  <rect class="frame" x="0.5" y="0.5" width="31" height="31" rx="6" fill="none" stroke-width="1" />
+  <!-- faint construction grid -->
+  <path class="grid" d="M16 4 V28 M4 16 H28" stroke-width="1" opacity="0.1" />
+  <!-- node marker: soft glow + accent ring + center dot -->
+  <circle class="glow" cx="16" cy="16" r="9.5" opacity="0.16" />
+  <circle class="accent-stroke" cx="16" cy="16" r="6.5" fill="none" stroke-width="2" />
+  <circle class="accent" cx="16" cy="16" r="3" />
+</svg>
