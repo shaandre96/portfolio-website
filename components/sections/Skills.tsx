@@ -1,6 +1,6 @@
-import { skillGroups } from "@/lib/data/skills";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SkillGroup } from "@/components/ui/SkillGroup";
+import { skillGroups } from "@/lib/data/skills";
 
 export function Skills() {
   return (

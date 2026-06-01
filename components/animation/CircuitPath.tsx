@@ -7,6 +7,7 @@ export function CircuitPath() {
     <div className="circ">
       <span className="start" />
       <svg
+        aria-hidden="true"
         viewBox="0 0 100 36"
         preserveAspectRatio="none"
         fill="none"

@@ -1,7 +1,6 @@
 # Andre Sha — Portfolio
 
-Single-page blueprint portfolio for a Lead Full Stack Developer. Built to the
-spec in [`CLAUDE.md`](./CLAUDE.md) from the Claude Design handoff.
+Single-page developer portfolio for a Lead Full Stack Developer.
 
 **Stack:** Next.js 16 (App Router, RSC) · TypeScript (strict) · Tailwind CSS v4
 (`@theme` + CSS variables) · anime.js v4 · `next/font` (Geist + Geist Mono).
@@ -40,16 +39,3 @@ Content is always visible in base CSS — JS only enhances. The scroll-draw,
 node activation, and staggered reveals are fully disabled under
 `prefers-reduced-motion`, which shows the final drawn state. One `<h1>`, logical
 `<h2>`s, singular landmarks, visible focus rings, and descriptive links.
-
-## Before deploy — fill these placeholders
-
-- `lib/site.ts`: `url` (currently `https://andresha.dev`), `linkedin`, `github`.
-  The canonical URL can also be set via `NEXT_PUBLIC_SITE_URL`.
-- `lib/data/projects.ts`: replace each project `href: "#"` with its live URL
-  (external links automatically open in a new tab once real).
-- Drop a CV PDF at `public/andre-sha-cv.pdf` to wire up the "Download CV" button
-  (path set in `lib/site.ts` → `cvPath`).
-
-## Deploy
-
-Push to Vercel (free tier). No server runtime needed — every route is static.
