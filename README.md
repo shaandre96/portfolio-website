@@ -1,41 +1,35 @@
 # Andre Sha — Portfolio
 
-Single-page developer portfolio for a Lead Full Stack Developer.
+A fast, single-page developer portfolio with a blueprint aesthetic — thin construction lines, monospace coordinate annotations, and SVG circuit paths that draw themselves as you scroll.
 
-**Stack:** Next.js 16 (App Router, RSC) · TypeScript (strict) · Tailwind CSS v4
-(`@theme` + CSS variables) · anime.js v4 · `next/font` (Geist + Geist Mono).
+**Live demo →** https://andresha.dev
 
-## Develop
+![Portfolio site screenshot](./docs/screenshot.png)
+
+## Features
+
+- **Scroll-driven blueprint animation** — SVG circuit paths draw in sync with scroll position (anime.js `createDrawable` + scroll observer), with node markers and coordinate annotations revealing as the line reaches each section.
+- **Theme system built on CSS variables** — light/dark switch by swapping custom-property values rather than duplicating class sets. The initial theme is resolved by an inline pre-paint script to avoid a flash of incorrect theme, with a persisted manual toggle that falls back to `prefers-color-scheme`.
+- **Server-first component architecture** — React Server Components by default; client components only where interactivity demands it (theme toggle, scroll-draw wrapper).
+- **SEO-complete** — Metadata API, Open Graph and Twitter cards, JSON-LD `Person` schema, a dynamic Open Graph image, plus generated `sitemap.ts` and `robots.ts`.
+- **Accessibility-first** — semantic landmarks, skip-to-content link, visible focus rings, and a `prefers-reduced-motion` guard that disables the scroll animation and renders the final drawn state.
+- **Content-driven sections** — projects, experience, and skills live in typed data files, so sections render from data rather than hardcoded markup.
+
+## Tech stack
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · anime.js · lucide-react · Vercel Analytics · Biome
+
+## Running locally
 
 ```bash
+git clone https://github.com/shaandre96/portfolio-website.git
+cd portfolio-website
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build (all routes prerender static)
-npm run lint     # eslint (next/core-web-vitals + typescript)
-npm run typecheck
+npm run dev
 ```
 
-## Architecture
+The public site URL can be overridden at build time with the optional `NEXT_PUBLIC_SITE_URL` environment variable; it defaults to `https://andresha.dev`.
 
-- `app/layout.tsx` — fonts, SEO metadata, Person JSON-LD, no-FOUC theme script,
-  skip link, header.
-- `app/page.tsx` — thin; composes the six section components + footer inside the
-  rail-bearing `<main>`.
-- `app/globals.css` — design tokens (light/dark), Tailwind `@theme` mapping,
-  construction grid, and all section styles (variable-driven; no hardcoded hex
-  in components).
-- `app/{sitemap,robots,opengraph-image}.*` — SEO routes + dynamic OG card.
-- `components/sections/*` — Hero, About, SelectedWork, Experience, Skills, Contact.
-- `components/ui/*` — Header, ThemeToggle, Button, SectionHeading, ProjectCard,
-  SkillGroup, NodeMarker, Footer.
-- `components/animation/*` — `CircuitPath` (hero dashed SVG) and `ScrollDraw`
-  (the continuous left-rail circuit that fills on scroll and lights each node;
-  anime.js powers staggered section reveals).
-- `lib/data/*` — projects, experience, skills, nav. `lib/site.ts` — site constants.
+## Notes
 
-## Accessibility & motion
-
-Content is always visible in base CSS — JS only enhances. The scroll-draw,
-node activation, and staggered reveals are fully disabled under
-`prefers-reduced-motion`, which shows the final drawn state. One `<h1>`, logical
-`<h2>`s, singular landmarks, visible focus rings, and descriptive links.
+Built as a personal portfolio that doubles as a working demonstration of the blueprint design language and a server-first Next.js 16 architecture. The scroll-draw interaction is the signature piece, and the entire theme is driven by CSS variables mapped into Tailwind via `@theme`.
