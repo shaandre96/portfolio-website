@@ -1,0 +1,91 @@
+---
+type: rfc
+title: Typed templates for ADRs, RFCs, and posts
+date: 2026-06-04
+status: Accepted
+summary: A proposal for rendering each case study through a template chosen by its
+  frontmatter type, with structured section components that keep ADRs and RFCs
+  consistent without locking blog posts into a rigid shape.
+tags: ["MDX", "Design System", "TypeScript", "DX"]
+repo: https://github.com/shaandre96/portfolio-website
+rfcNumber: "0001"
+authors: ["Andre Sha"]
+---
+
+<Motivation>
+
+[ADR-0001](/case-studies/adr-0001-mdx-server-components) settled *how* posts are
+compiled. This RFC settles *how they render*.
+
+Three kinds of writing share the collection: Architecture Decision Records,
+Requests for Comments, and freeform posts. ADRs and RFCs benefit from a
+predictable skeleton — a reader should find the **Decision** of any ADR in the
+same place every time. But forcing a blog post into "Context / Decision /
+Consequences" would be absurd. The system needs structure where structure helps
+and freedom where it doesn't.
+
+</Motivation>
+
+<Design>
+
+Each post declares its `type` in frontmatter. The `[slug]` route compiles the MDX
+once, then dispatches to a template by type:
+
+```tsx
+switch (meta.type) {
+  case "adr":
+    return <AdrTemplate meta={meta}>{content}</AdrTemplate>;
+  case "rfc":
+    return <RfcTemplate meta={meta}>{content}</RfcTemplate>;
+  default:
+    return <BlogTemplate meta={meta}>{content}</BlogTemplate>;
+}
+```
+
+Each template renders a shared `CaseStudyShell` (back-link, title, date, tags,
+repo link, rail terminus) plus a type-specific header — a status badge and
+decider/author block for ADRs and RFCs.
+
+Structure inside the body comes from **section components** passed into the MDX
+scope, so authors write semantic tags instead of repeating markup:
+
+| Template | Section components |
+| --- | --- |
+| ADR | `<Context>` `<Decision>` `<Consequences>` |
+| RFC | `<Motivation>` `<Design>` `<Alternatives>` `<Drawbacks>` `<UnresolvedQuestions>` |
+| Blog | none — plain headings and prose |
+
+Every section renders through one `LabeledSection` primitive that draws the mono
+blueprint label, so the look stays consistent and the labels can't drift.
+
+</Design>
+
+<Alternatives>
+
+- **One universal template.** Simplest to build, but it can't show an ADR's status
+  or an RFC's number without a pile of conditionals — the complexity just moves
+  into the template.
+- **Convention-based headings.** Detect `## Context` and style it. Fragile: a typo
+  in a heading silently loses the styling, with no compile-time signal.
+- **Per-post bespoke layouts.** Maximum control, zero reuse. Rejected immediately.
+
+The section-component approach keeps authoring declarative while giving the
+compiler a chance to catch a missing section.
+
+</Alternatives>
+
+<Drawbacks>
+
+Authors must learn the section-component vocabulary for ADRs and RFCs rather than
+writing pure markdown. The mitigation is that the three seed posts in this repo
+double as copy-paste templates.
+
+</Drawbacks>
+
+<UnresolvedQuestions>
+
+- Should a missing required section (an ADR with no `<Decision>`) be a build error
+  rather than a silent omission?
+- Do RFCs need a status-history table once posts start superseding one another?
+
+</UnresolvedQuestions>

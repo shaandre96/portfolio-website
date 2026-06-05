@@ -1116,3 +1116,376 @@ a {
     animation: none;
   }
 }
+
+/* =========================================================================
+   CASE STUDIES — index + article (MDX prose). Reuses the rail/blueprint
+   tokens; light/dark handled entirely by the shared variables.
+   ========================================================================= */
+
+/* active nav item (current route) reads like a hovered link */
+.topnav a[aria-current="page"] {
+  color: var(--text);
+}
+.topnav a[aria-current="page"]::after {
+  width: 100%;
+}
+
+/* static rail spine on the case-studies pages (no scroll-fill here) */
+.cs-spine {
+  height: 100%;
+}
+
+/* ---------- index ---------- */
+.cs-intro {
+  padding-top: 60px;
+  padding-bottom: 48px;
+}
+.cs-intro h1 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  margin: 6px 0 18px;
+}
+.cs-lead {
+  max-width: 60ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.cs-empty {
+  color: var(--text-2);
+}
+
+.cs-card-link {
+  display: block;
+  color: inherit;
+}
+.cs-card .card-index time {
+  color: inherit;
+}
+
+/* ---------- article ---------- */
+.cs-article {
+  padding-top: 40px;
+}
+.cs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 36px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  transition: color 0.2s ease;
+}
+.cs-back:hover {
+  color: var(--accent);
+}
+.cs-header {
+  max-width: 760px;
+  margin-bottom: 44px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.cs-header h1 {
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  margin: 12px 0 18px;
+}
+.cs-summary {
+  max-width: 62ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--text-2);
+  text-wrap: pretty;
+}
+.cs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+.cs-meta a {
+  color: var(--accent);
+}
+.cs-meta a:hover {
+  text-decoration: underline;
+}
+.cs-tags {
+  margin-top: 18px;
+}
+
+/* type-specific fact list (status / deciders / authors) */
+.cs-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 36px;
+  margin-top: 28px;
+}
+.cs-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.cs-fact dt {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.cs-fact dd {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12.5px;
+  color: var(--text);
+}
+.cs-fact dd a {
+  color: var(--accent);
+}
+
+/* status badge — tone keyed off data-status, all from existing tokens */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.status-badge .sb-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-2);
+}
+.status-badge[data-status="accepted"],
+.status-badge[data-status="final"] {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.status-badge[data-status="accepted"] .sb-dot,
+.status-badge[data-status="final"] .sb-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.status-badge[data-status="superseded"],
+.status-badge[data-status="deprecated"],
+.status-badge[data-status="rejected"],
+.status-badge[data-status="withdrawn"] {
+  border-style: dashed;
+}
+
+/* labelled MDX section (ADR/RFC structured blocks) */
+.labeled-section {
+  margin-top: 44px;
+}
+.labeled-section .ls-label {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.ls-body > :first-child {
+  margin-top: 0;
+}
+
+/* ---------- prose (compiled MDX body) ---------- */
+.prose {
+  max-width: 760px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+  text-wrap: pretty;
+}
+.prose > :first-child,
+.prose .labeled-section:first-child {
+  margin-top: 0;
+}
+.prose p {
+  margin-top: 1.1em;
+  max-width: 70ch;
+}
+.prose h2 {
+  margin-top: 2em;
+  font-size: clamp(1.4rem, 2.4vw, 1.7rem);
+}
+.prose h3 {
+  margin-top: 1.7em;
+  font-size: clamp(1.15rem, 2vw, 1.32rem);
+}
+.prose h4 {
+  margin-top: 1.5em;
+  font-size: 1.05rem;
+}
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* links: underline body links, leave heading-anchor wraps clean */
+.prose a {
+  color: var(--accent);
+}
+.prose :is(p, li, td, blockquote) a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--border);
+  transition: text-decoration-color 0.2s ease;
+}
+.prose :is(p, li, td, blockquote) a:hover {
+  text-decoration-color: var(--accent);
+}
+.prose :is(h2, h3, h4) a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose :is(h2, h3, h4) a:hover {
+  color: var(--accent);
+}
+.cs-ext {
+  font-size: 0.85em;
+}
+
+/* lists */
+.prose ul,
+.prose ol {
+  margin-top: 1.1em;
+}
+.prose ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prose ul > li {
+  position: relative;
+  padding-left: 1.3em;
+}
+.prose ul > li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.prose ol {
+  padding-left: 1.4em;
+}
+.prose ol > li::marker {
+  color: var(--accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9em;
+}
+.prose li + li {
+  margin-top: 0.45em;
+}
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.45em;
+}
+
+/* blockquote */
+.prose blockquote {
+  margin-top: 1.5em;
+  padding: 4px 0 4px 22px;
+  border-left: 2px solid var(--accent);
+  color: var(--text-2);
+}
+.prose blockquote :first-child {
+  margin-top: 0;
+}
+
+/* inline code */
+.prose :not(pre) > code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9em;
+  padding: 2px 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text);
+}
+
+/* code blocks (rehype-pretty-code, dual Shiki theme) */
+.prose figure[data-rehype-pretty-code-figure] {
+  margin-top: 1.5em;
+}
+.prose [data-rehype-pretty-code-title] {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  background: var(--surface);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.prose [data-rehype-pretty-code-figure] pre {
+  overflow-x: auto;
+  padding: 18px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.prose [data-rehype-pretty-code-figure] code {
+  display: grid;
+  font-family: var(--font-geist-mono), monospace;
+  background: transparent;
+}
+.prose [data-rehype-pretty-code-figure] [data-line] {
+  padding: 0 20px;
+}
+/* dual theme: each token carries both colours as CSS vars (rehype-pretty-code
+   marks the <pre> with data-theme); pick one per the page's data-theme */
+.prose pre[data-theme] code span {
+  color: var(--shiki-light);
+}
+[data-theme="dark"] .prose pre[data-theme] code span {
+  color: var(--shiki-dark);
+}
+
+/* tables (GFM) */
+.prose table {
+  width: 100%;
+  margin-top: 1.5em;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.prose th,
+.prose td {
+  padding: 9px 13px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: var(--surface);
+}
+
+/* misc */
+.prose hr {
+  margin: 2.4em 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+.cs-figure {
+  margin-top: 1.5em;
+}
+.cs-figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+}

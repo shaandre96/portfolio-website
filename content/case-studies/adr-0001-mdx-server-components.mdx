@@ -1,0 +1,85 @@
+---
+type: adr
+title: Render case studies as MDX server components
+date: 2026-06-05
+status: Accepted
+summary: Author long-form technical writing as MDX files in the repo and compile
+  them in React Server Components, rather than reaching for a CMS or a client-side
+  markdown renderer.
+tags: ["Next.js 16", "MDX", "RSC", "Architecture"]
+repo: https://github.com/shaandre96/portfolio-website
+deciders: ["Andre Sha"]
+---
+
+<Context>
+
+The portfolio needed a place to publish RFCs, ADRs, and blog-style posts about
+public repos — content that doesn't belong on the scannable, 10–30 second landing
+page. The constraints were specific:
+
+- **Authoring in git.** Posts are written by a developer, alongside the code they
+  describe. Version control, review, and a plain-text source of truth matter more
+  than a rich WYSIWYG editor.
+- **Zero runtime cost on the hot path.** The landing page targets 95+ Lighthouse
+  performance. A content system must not ship a markdown parser or a CMS client to
+  the browser.
+- **Structured, not freeform.** ADRs and RFCs have a shape. The system should be
+  able to enforce one without hand-rolling HTML per post.
+
+The realistic options were a headless CMS (Notion, Contentful), a client-side
+markdown renderer, or MDX compiled on the server.
+
+</Context>
+
+<Decision>
+
+Author posts as `.mdx` files under `content/case-studies/` and compile them in
+React Server Components using `next-mdx-remote/rsc`'s `compileMDX`.
+
+```ts
+import { compileMDX } from "next-mdx-remote/rsc";
+
+const { content, frontmatter } = await compileMDX({
+  source,
+  options: {
+    parseFrontmatter: true,
+    mdxOptions: { remarkPlugins, rehypePlugins },
+  },
+  components,
+});
+```
+
+Frontmatter carries typed metadata (a discriminating `type` field plus
+per-type fields like ADR `status` or RFC `authors`). A small filesystem loader
+validates that frontmatter into a discriminated union at build time, so a
+malformed post fails the build instead of rendering broken.
+
+Code blocks are highlighted at build time with `rehype-pretty-code` (Shiki), and
+headings get anchors via `rehype-slug` + `rehype-autolink-headings`.
+
+</Decision>
+
+<Consequences>
+
+**Positive**
+
+- Posts ship as static HTML. No markdown runtime reaches the browser; syntax
+  highlighting is resolved at build time.
+- Content lives in the repo, reviewable in the same PRs as the code it documents.
+- The typed frontmatter union means the compiler — not a human — guarantees every
+  ADR has a `status` and every RFC has a number.
+
+**Negative / trade-offs**
+
+- MDX is compiled per request in dev and per page at build; Shiki adds weight to
+  the build step. Acceptable for a handful of posts; revisit if the collection
+  grows into the hundreds.
+- Writing is coupled to a deploy. There's no "publish from a phone" path — by
+  design, for a developer-authored archive.
+
+**Neutral**
+
+- Migrating to a CMS later is still possible: the loader is the only module that
+  touches the filesystem, so the content source is swappable behind it.
+
+</Consequences>

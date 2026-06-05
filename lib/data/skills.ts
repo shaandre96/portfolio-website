@@ -71,4 +71,5 @@ export const navItems = [
   { num: "03", label: "Experience", href: "#experience" },
   { num: "04", label: "Skills", href: "#skills" },
   { num: "05", label: "Contact", href: "#contact" },
+  { num: "06", label: "Writing", href: "/case-studies" },
 ] as const;
