@@ -1,0 +1,76 @@
+---
+type: blog
+title: Building a blueprint-grade portfolio in Next.js 16
+date: 2026-06-02
+summary: Notes on designing a portfolio that signals systems thinking — a
+  construction-grid aesthetic, a scroll-drawn circuit rail, and a token system
+  that flips light and dark by swapping variables instead of duplicating classes.
+tags: ["Next.js 16", "Design", "Tailwind v4", "anime.js"]
+repo: https://github.com/shaandre96/portfolio-website
+---
+
+A portfolio for a lead engineer has a narrow job: get to the interview. Recruiters
+scan for 10 to 30 seconds, often on a phone. So the site itself had to be the
+proof — fast, precise, and visibly the work of someone who thinks in systems.
+
+I leaned into a **blueprint** aesthetic: thin construction lines, monospace
+coordinate annotations, a faint grid, and a single architect's-blue accent. It
+says "I design systems" without a paragraph claiming it.
+
+## Tokens first, themes for free
+
+Every colour is a CSS custom property. Light and dark switch by swapping variable
+values — never by duplicating class sets.
+
+```css
+:root {
+  --bg: #fbfaf7;
+  --text: #172a3a;
+  --accent: #1b6fb8;
+}
+[data-theme="dark"] {
+  --bg: #0c1620;
+  --text: #f2f6fa;
+  --accent: #5fb3f0;
+}
+```
+
+Tailwind v4's `@theme inline` maps those variables into utilities, so a class like
+`text-accent` resolves to whatever `--accent` currently is. The theme toggle just
+sets `data-theme` on `<html>`; an inline script in `<head>` resolves it before
+first paint to avoid a flash.
+
+## A circuit you draw by scrolling
+
+The signature interaction is a blueprint being plotted live: as you scroll, a rail
+fills down the left axis and node markers light up as the pen reaches them. It's
+`anime.js` driving an SVG draw, scrubbed by scroll position rather than triggered
+once.
+
+The non-negotiable rule: it has to degrade gracefully.
+
+```ts
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (reduce) {
+  // snap to final state, skip the scrub
+  return;
+}
+```
+
+With JavaScript disabled or reduced motion on, the content is fully visible and the
+rail simply sits in its resting state. The animation is an enhancement, never a
+dependency.
+
+## What I deliberately didn't build
+
+> A 3D room would have been fun to build and bad for hiring: slow to load, poor for
+> SEO, and a battery drain in a screen-share.
+
+Three.js competence is signalled in the skills list and a certification, not by
+making a recruiter wait for a scene to compile. The whole site is a single page of
+server components with two small client islands — the theme toggle and the
+scroll-draw wrapper.
+
+This very page is part of that system: the case studies you're reading are MDX
+compiled on the server, documented in their own [ADR](/case-studies/adr-0001-mdx-server-components)
+and [RFC](/case-studies/rfc-0001-typed-case-study-templates).
